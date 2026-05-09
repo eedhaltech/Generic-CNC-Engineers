@@ -122,7 +122,7 @@ a { text-decoration: none; color: inherit; }
   padding: 4px;
   background: none;
   border: none;
-}S
+}
 .nav-toggle span {
   display: block;
   width: 24px;
@@ -859,43 +859,6 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.05em;
 }
 
-/* ===== PRODUCT GALLERY ===== */
-.product-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-.gallery-item {
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  border: 1px solid var(--light-border);
-  background: var(--offwhite);
-  position: relative;
-}
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.35s ease;
-}
-.gallery-item:hover img { transform: scale(1.05); }
-.gallery-item.gallery-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.gallery-item.gallery-placeholder::after {
-  content: '⚙';
-  font-size: 2.5rem;
-  opacity: 0.2;
-}
-@media (max-width: 768px) {
-  .product-gallery { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .product-gallery { grid-template-columns: 1fr; }
-}
 
 #footer {
   background: var(--iron);
@@ -982,6 +945,58 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 480px) {
   .stat-cell { flex: 1 1 100%; border-left: none !important; border-top: 1px solid #222; }
   .stat-cell:first-child { border-top: none; }
+}
+
+/* ===== MOBILE — index page specific ===== */
+@media (max-width: 900px) {
+  /* Info sections: stack columns */
+  .info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem;
+  }
+  .info-section { padding: 3.5rem 1.25rem; }
+
+  /* Infrastructure why-us inline 2-col → 1-col */
+  .why-us-grid[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Section padding */
+  .section-wrap { padding: 3rem 1.25rem; }
+  .info-section { padding: 3rem 1.25rem; }
+
+  /* Hero text */
+  .hero-content { padding: 1.25rem; }
+  .hero-sub { font-size: 0.95rem; }
+
+  /* About gear visual — shrink */
+  .gear-wrap { width: 200px; height: 200px; }
+  .gear-large { width: 200px; height: 200px; }
+  .gear-small { width: 100px; height: 100px; }
+  .about-right { max-width: 240px; }
+
+  /* Cert card & contact form padding */
+  .cert-card { padding: 1.5rem 1rem; }
+  .contact-form { padding: 1.5rem 1rem; }
+
+  /* Infrastructure why-us: 1 column on small phones */
+  .why-us-grid { grid-template-columns: 1fr !important; }
+
+  /* Customers fallback grid */
+  .customers-fallback { grid-template-columns: repeat(2, 1fr); }
+
+  /* Section headings */
+  .section-h2 { margin-bottom: 1.5rem; }
+
+  /* Stat numbers slightly smaller */
+  .stat-number { font-size: 2.8rem; }
+
+  /* Footer */
+  #footer { padding: 2.5rem 1.25rem; }
+  .footer-logo { font-size: 1.8rem; }
+  .footer-certs { font-size: 0.7rem; letter-spacing: 0.1em; }
 }
 
 
@@ -1250,43 +1265,6 @@ a { text-decoration: none; color: inherit; }
   </div>
 </section>
 
-
-<!-- <section class="info-section">
-  <div class="section-inner">
-    <p class="section-eyebrow">Our Work</p>
-    <h2 class="section-h2">PRODUCT GALLERY</h2>
-    <p style="color:var(--text-mid);font-size:0.97rem;margin-bottom:2rem;max-width:600px;">Precision machined components manufactured at our Coimbatore facility — gearbox parts, valve components, pole wheels, and automotive assemblies.</p>
-    <div class="product-gallery">
-      <div class="gallery-item">
-        <img src="images/product-1.jpg" alt="Precision Machined Component 1"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-      <div class="gallery-item">
-        <img src="images/product-2.jpg" alt="Precision Machined Component 2"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-      <div class="gallery-item">
-        <img src="images/product-3.jpg" alt="Precision Machined Component 3"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-      <div class="gallery-item">
-        <img src="images/product-4.jpg" alt="Precision Machined Component 4"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-      <div class="gallery-item">
-        <img src="images/product-5.jpg" alt="Precision Machined Component 5"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-      <div class="gallery-item">
-        <img src="images/product-6.jpg" alt="Precision Machined Component 6"
-             onerror="this.parentElement.classList.add('gallery-placeholder')">
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:2rem;">
-      <a href="products.html" class="btn btn-primary">View All 58 Products</a>
-    </div>
-  </div>
-</section> -->
 
 <!-- contact moved to contact.html -->
 <section class="section-wrap" style="padding:3rem 2rem 2rem;">
