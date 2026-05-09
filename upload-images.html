@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Image Uploader — Generic CNC Engineers</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5ebe0; padding: 2rem; color: #1a1c1f; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #d4430a; }
+  p { font-size: 0.9rem; color: #555; margin-bottom: 2rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .slot { background: white; border: 2px dashed #e8d8c8; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s; position: relative; }
+  .slot:hover { border-color: #d4430a; }
+  .slot.filled { border-style: solid; border-color: #2a7a2a; }
+  .slot input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .slot img { width: 100%; height: 120px; object-fit: cover; display: none; margin-bottom: 0.5rem; }
+  .slot.filled img { display: block; }
+  .slot-name { font-size: 0.72rem; font-weight: bold; color: #d4430a; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .slot-label { font-size: 0.85rem; font-weight: bold; color: #1a1c1f; }
+  .slot-hint { font-size: 0.7rem; color: #888; margin-top: 0.3rem; }
+  .slot.filled .slot-hint { color: #2a7a2a; }
+  .section-title { font-size: 1rem; font-weight: bold; color: #1a1c1f; margin: 2rem 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid #d4430a; text-transform: uppercase; letter-spacing: 0.1em; }
+  .save-btn { display: block; margin: 2rem auto; padding: 1rem 3rem; background: #d4430a; color: white; border: none; font-size: 1rem; font-weight: bold; cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; }
+  .save-btn:hover { background: #c03a08; }
+  #status { text-align: center; margin-top: 1rem; font-weight: bold; color: #2a7a2a; }
+  .instructions { background: #fff; border-left: 4px solid #d4430a; padding: 1rem 1.5rem; margin-bottom: 2rem; font-size: 0.88rem; line-height: 1.6; }
+  .instructions strong { color: #d4430a; }
+</style>
+</head>
+<body>
+<h1>&#128247; Product Image Uploader</h1>
+<div class="instructions">
+  <strong>How to use:</strong><br>
+  1. Click on any card below to select the matching photo from your computer or phone<br>
+  2. The image preview will appear in the card<br>
+  3. Click <strong>"Save All Images"</strong> — this downloads each image with the correct filename<br>
+  4. Move the downloaded files into: <code>images/products/</code> folder
+</div>
+
+<div id="app"></div>
+<button class="save-btn" onclick="saveAll()">&#128190; Save All Images to images/products/</button>
+<div id="status"></div>
+
+<script>
+const products = [
+  { section: "MSA Body Assembly", items: [
+    { file: "msa-body.jpg", label: "Body" },
+    { file: "msa-worm-gear.jpg", label: "Worm Gear" },
+    { file: "msa-worm-shaft.jpg", label: "Worm Shaft" },
+    { file: "msa-lock-nut.jpg", label: "Lock Nut" },
+    { file: "msa-spring.jpg", label: "Spring" },
+    { file: "msa-worm.jpg", label: "Worm" },
+    { file: "msa-assembly-1.jpg", label: "MSA Body Assembly #1" },
+    { file: "msa-sub-assembly.jpg", label: "MSA Sub-Assembly" },
+    { file: "msa-assembly-2.jpg", label: "MSA Body Assembly #2" },
+  ]},
+  { section: "Pole Wheel (ABS Sensor Rings)", items: [
+    { file: "pole-wheel-1.jpg", label: "Pole Wheel #1" },
+    { file: "pole-wheel-2.jpg", label: "Pole Wheel #2" },
+    { file: "pole-wheel-3.jpg", label: "Pole Wheel #3" },
+    { file: "pole-wheel-4.jpg", label: "Pole Wheel #4" },
+    { file: "pole-wheel-5.jpg", label: "Pole Wheel #5" },
+  ]},
+  { section: "Precision Machined Components", items: Array.from({length:20},(_,i)=>({ file:`precision-${i+1}.jpg`, label:`Precision Component #${i+1}` })) },
+  { section: "Pump & Valve Parts", items: [
+    { file: "pump-valve-1.jpg", label: "Pump & Valve Part #1" },
+    { file: "pump-valve-2.jpg", label: "Pump & Valve Part #2" },
+    { file: "pump-valve-3.jpg", label: "Pump & Valve Part #3" },
+    { file: "pump-valve-4.jpg", label: "Pump & Valve Part #4" },
+  ]},
+  { section: "Valve & Precision Parts", items: Array.from({length:12},(_,i)=>({ file:`valve-${i+1}.jpg`, label:`Valve & Precision Part #${i+1}` })) },
+  { section: "Gear & Flange Parts", items: Array.from({length:8},(_,i)=>({ file:`gear-${i+1}.jpg`, label:`Gear & Flange Part #${i+1}` })) },
+];
+
+const fileMap = {};
+const app = document.getElementById('app');
+
+products.forEach(section => {
+  const title = document.createElement('div');
+  title.className = 'section-title';
+  title.textContent = section.section;
+  app.appendChild(title);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  section.items.forEach(item => {
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.id = 'slot-' + item.file;
+
+    const img = document.createElement('img');
+    img.id = 'img-' + item.file;
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      fileMap[item.file] = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        img.src = ev.target.result;
+        slot.classList.add('filled');
+        hint.textContent = '✓ Ready to save';
+      };
+      reader.readAsDataURL(file);
+    };
+
+    const catDiv = document.createElement('div');
+    catDiv.className = 'slot-name';
+    catDiv.textContent = section.section;
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'slot-label';
+    nameDiv.textContent = item.label;
+
+    const hint = document.createElement('div');
+    hint.className = 'slot-hint';
+    hint.textContent = 'Click to select image';
+
+    const fileDiv = document.createElement('div');
+    fileDiv.style.cssText = 'font-size:0.62rem;color:#aaa;margin-top:0.2rem;';
+    fileDiv.textContent = item.file;
+
+    slot.appendChild(img);
+    slot.appendChild(input);
+    slot.appendChild(catDiv);
+    slot.appendChild(nameDiv);
+    slot.appendChild(hint);
+    slot.appendChild(fileDiv);
+    grid.appendChild(slot);
+  });
+
+  app.appendChild(grid);
+});
+
+function saveAll() {
+  const keys = Object.keys(fileMap);
+  if (keys.length === 0) {
+    document.getElementById('status').textContent = 'No images selected yet. Click on cards to select images first.';
+    document.getElementById('status').style.color = '#c03a08';
+    return;
+  }
+  keys.forEach(filename => {
+    const file = fileMap[filename];
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  document.getElementById('status').textContent = `✓ Downloading ${keys.length} image(s). Move them to the images/products/ folder.`;
+  document.getElementById('status').style.color = '#2a7a2a';
+}
+</script>
+</body>
+</html>
+

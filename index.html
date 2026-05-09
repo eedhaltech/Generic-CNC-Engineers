@@ -1,0 +1,1605 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<style id="pt-antiflash">html,body{background:#fdf6f0 !important}.nav-logo{transition:none !important}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generic CNC Engineers — Precision CNC Machining & Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== CUSTOM PROPERTIES ===== */
+:root {
+  --iron:   #0e0f11;
+  --steel:  #1a1c1f;
+  --chrome: #5a5f6a;
+  --rust:   #d4430a;
+  --gold:   #e8a820;
+  --white:  #fdf6f0;
+  --offwhite: #f5ebe0;
+  --light-border: #e8d8c8;
+  --text-dark: #1a1c1f;
+  --text-mid: #4a4f5a;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #fdf6f0;
+  color: var(--text-dark);
+  font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ===== NAVBAR ===== */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(253,246,240,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--light-border);
+  transition: box-shadow 0.3s;
+}
+#navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+.nav-inner {
+  width: 100%;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-right: auto;
+}
+.nav-logo .star { color: var(--rust); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  padding: 0.5rem 0.9rem;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0.9rem; right: 0.9rem;
+  height: 2px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-links a:hover { color: var(--rust); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--rust); }
+.nav-links a.active::after { transform: scaleX(1); }
+.nav-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--rust);
+  color: var(--white) !important;
+  padding: 0.55rem 1.4rem !important;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: #c03a08 !important; }
+.nav-cta::after { display: none !important; }
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}S
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-dark);
+  transition: all 0.3s;
+}
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--white);
+  padding-top: 64px;
+}
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 2rem;
+  max-width: 860px;
+}
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.5em;
+  color: var(--rust);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.7s ease forwards 0.3s;
+}
+.hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 11vw, 11rem);
+  line-height: 0.88;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.7s ease forwards 0.5s;
+}
+.hero-h1 .line1 { color: var(--text-dark); display: block; }
+.hero-h1 .line2 { color: var(--rust); display: block; }
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.65;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.7s ease forwards 0.7s;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.7s ease forwards 0.9s;
+}
+.btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  border: none;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--rust); color: var(--white); }
+.btn-primary:hover { background: #c03a08; }
+.btn-outline {
+  background: transparent;
+  color: var(--text-dark);
+  border: 1.5px solid var(--text-dark);
+}
+.btn-outline:hover { background: var(--rust); color: var(--white); border-color: var(--rust); }
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 1.2s;
+}
+.scroll-hint span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--chrome);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--chrome), transparent);
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+
+/* ===== STATS BAR ===== */
+#stats {
+  background: var(--iron);
+  display: flex;
+  width: 100%;
+}
+.stat-cell {
+  flex: 1;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+.stat-cell + .stat-cell { border-left: 1px solid #222; }
+.stat-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(212,67,10,0.07);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.stat-cell:hover::before { transform: scaleX(1); }
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: var(--rust);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #666;
+  margin-top: 0.4rem;
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* ===== MARQUEE ===== */
+#marquee {
+  background: #0a0b0d;
+  border-top: 1px solid #181818;
+  border-bottom: 1px solid #181818;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.85rem 0;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marqueeScroll 28s linear infinite;
+}
+.marquee-track span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: #2e2e2e;
+}
+.marquee-track .divider { color: var(--rust); margin: 0 0.6em; }
+
+/* ===== SECTION SHARED ===== */
+.section-wrap {
+  padding: 6rem 2rem;
+}
+.section-wrap.alt { background: var(--offwhite); }
+.section-wrap.dark { background: var(--iron); }
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.5em;
+  color: var(--rust);
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.section-h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  color: var(--text-dark);
+  margin-bottom: 3rem;
+  line-height: 1;
+}
+.section-wrap.dark .section-h2 { color: var(--white); }
+.section-rule {
+  width: 50px;
+  height: 3px;
+  background: var(--rust);
+  margin: 1rem 0 2.5rem;
+}
+
+/* ===== PRODUCTS ===== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--light-border);
+  border: 1px solid var(--light-border);
+}
+.product-card {
+  background: #fdf6f0;
+  padding: 2rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+.product-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.product-card:hover::after { transform: scaleX(1); }
+.card-icon { font-size: 2.4rem; margin-bottom: 1rem; display: block; }
+.card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+.card-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 1rem; }
+.card-badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(232,168,32,0.4);
+  padding: 0.2rem 0.55rem;
+}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.achievement-card {
+  background: #14161a;
+  border: 1px solid #252830;
+  padding: 2rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s;
+}
+.achievement-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--rust);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.35s ease;
+}
+.achievement-card:hover { transform: translateY(-4px); }
+.achievement-card:hover::before { transform: scaleY(1); }
+.ach-year {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: var(--rust);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.ach-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+.ach-desc { font-size: 0.85rem; color: #666; line-height: 1.5; }
+.ach-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(232,168,32,0.3);
+  padding: 0.2rem 0.55rem;
+}
+
+/* ===== CAREERS ===== */
+.careers-intro {
+  max-width: 620px;
+  margin-bottom: 3rem;
+}
+.careers-intro p {
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+.careers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.career-card {
+  background: #fdf6f0;
+  border: 1px solid var(--light-border);
+  padding: 1.8rem;
+  position: relative;
+  transition: box-shadow 0.25s, transform 0.25s;
+  overflow: hidden;
+}
+.career-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.career-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.09); transform: translateY(-3px); }
+.career-card:hover::after { transform: scaleX(1); }
+.career-dept {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.5rem;
+}
+.career-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+}
+.career-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+.career-tag {
+  font-size: 0.75rem;
+  color: var(--text-mid);
+  background: #f5ebe0;
+  border: 1px solid var(--light-border);
+  padding: 0.2rem 0.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.05em;
+}
+.career-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 1.2rem; }
+.btn-sm {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.3rem;
+  background: var(--rust);
+  color: var(--white);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  display: inline-block;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-sm:hover { background: #c03a08; }
+
+/* ===== ABOUT ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.about-left p {
+  font-size: 0.98rem;
+  color: var(--text-mid);
+  line-height: 1.78;
+  margin-bottom: 1.2rem;
+}
+.about-right {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f5ebe0;
+  border: 1px solid var(--light-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.gear-wrap { position: relative; width: 280px; height: 280px; }
+.gear-large {
+  position: absolute; top: 0; left: 0;
+  width: 280px; height: 280px;
+  animation: rotateCW 20s linear infinite;
+  opacity: 0.12;
+}
+.gear-small {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px; height: 140px;
+  animation: rotateCCW 15s linear infinite;
+  opacity: 0.18;
+}
+
+/* ===== CONTACT ===== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: start;
+}
+.contact-info h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.03em;
+}
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+.contact-icon {
+  width: 40px; height: 40px;
+  background: var(--rust);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.contact-item-text strong {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.2rem;
+}
+.contact-item-text span {
+  font-size: 0.92rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+.contact-form {
+  background: #fdf6f0;
+  border: 1px solid var(--light-border);
+  padding: 2.5rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.form-group label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  background: #f5ebe0;
+  border: 1px solid var(--light-border);
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--rust); }
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-submit { width: 100%; }
+
+/* ===== COMPANY INFO SECTIONS ===== */
+.info-section { padding: 5rem 2rem; }
+.info-section.alt { background: var(--offwhite); }
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.info-text .section-h2 { margin-bottom: 1.2rem; }
+.info-text p {
+  font-size: 0.97rem;
+  color: var(--text-mid);
+  line-height: 1.78;
+  margin-bottom: 1.1rem;
+}
+.info-text p:last-child { margin-bottom: 0; }
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+  border: 1px solid rgba(212,67,10,0.3);
+  padding: 0.4rem 1rem;
+  margin-top: 1rem;
+}
+
+/* Why Us grid */
+.why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.why-us-item {
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  border-left: 3px solid var(--rust);
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.why-us-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
+.why-us-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.why-us-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.03em;
+}
+
+/* Certificate card */
+.cert-card {
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cert-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--rust), var(--gold));
+}
+.cert-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.cert-badge-box {
+  background: var(--offwhite);
+  border: 1px solid var(--light-border);
+  padding: 0.6rem 1.2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  letter-spacing: 0.05em;
+}
+.cert-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--text-dark);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+.cert-subtitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 1.5rem;
+}
+.cert-body {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.cert-body strong {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+.cert-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--chrome);
+  border-top: 1px solid var(--light-border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+.cert-number span { color: var(--text-dark); font-weight: 700; }
+
+/* Client quote */
+.client-quote {
+  background: var(--offwhite);
+  border-left: 4px solid var(--rust);
+  padding: 1.5rem 2rem;
+  margin-top: 1.5rem;
+  position: relative;
+}
+.client-quote::before {
+  content: '\201C';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: var(--rust);
+  opacity: 0.2;
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  line-height: 1;
+}
+.client-quote p {
+  font-size: 0.95rem !important;
+  font-style: italic;
+  color: var(--text-dark) !important;
+  margin-bottom: 0.8rem !important;
+}
+.client-quote cite {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+  font-style: normal;
+}
+
+/* ===== CERTIFICATE IMAGE ===== */
+.cert-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--light-border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
+
+/* ===== CUSTOMERS SECTION ===== */
+.customers-img-wrap { margin-top: 0.5rem; }
+.customers-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--light-border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.customers-fallback {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.customer-name {
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.05em;
+}
+
+/* ===== PRODUCT GALLERY ===== */
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.gallery-item {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 1px solid var(--light-border);
+  background: var(--offwhite);
+  position: relative;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+.gallery-item.gallery-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-item.gallery-placeholder::after {
+  content: '⚙';
+  font-size: 2.5rem;
+  opacity: 0.2;
+}
+@media (max-width: 768px) {
+  .product-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .product-gallery { grid-template-columns: 1fr; }
+}
+
+#footer {
+  background: var(--iron);
+  border-top: 1px solid #1e2025;
+  padding: 3.5rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.footer-logo .star { color: var(--rust); }
+.footer-tagline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #444;
+  margin-bottom: 2rem;
+}
+.footer-certs {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #333;
+}
+.footer-certs span { margin: 0 0.5em; }
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #1e2025;
+  font-size: 0.78rem;
+  color: #333;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes rotateCCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-right { max-width: 320px; margin: 0 auto; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--light-border); padding: 1rem 0; gap: 0; }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 0.75rem 2rem; }
+  .nav-toggle { display: flex; }
+  #stats { flex-wrap: wrap; }
+  .stat-cell { flex: 1 1 50%; border-left: none !important; }
+  .stat-cell:nth-child(2) { border-left: 1px solid #222 !important; }
+  .stat-cell:nth-child(3) { border-top: 1px solid #222; }
+  .hero-ctas { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 280px; text-align: center; }
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .stat-cell { flex: 1 1 100%; border-left: none !important; border-top: 1px solid #222; }
+  .stat-cell:first-child { border-top: none; }
+}
+
+
+.nav-logo .star { color: var(--rust); }
+.brand-logo-svg { filter: drop-shadow(0 1px 2px rgba(212,67,10,0.18)); transition: filter 0.2s; }
+.nav-logo:hover .brand-logo-svg { filter: drop-shadow(0 2px 6px rgba(212,67,10,0.35)); }
+.footer-logo { display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important; }
+.footer-logo .brand-logo-svg { filter: brightness(1.1) drop-shadow(0 1px 4px rgba(212,67,10,0.3)); }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Precision Engineered &middot; Since 2004 &middot; Coimbatore, India</p>
+    <h1 class="hero-h1">
+      <span class="line1">GENERIC CNC</span>
+      <span class="line2">ENGINEERS</span>
+    </h1>
+    <p class="hero-sub">Over two decades of precision CNC engineering and automotive tooling, trusted by OEMs across India. Built to spec. Built to last.</p>
+    <div class="hero-ctas">
+      <a href="products.html" class="btn btn-primary">Explore Products</a>
+      <a href="contact.html" class="btn btn-outline">Request Quote</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<section id="stats">
+  <div class="stat-cell">
+    <span class="stat-number" data-target="50" data-suffix="+">0</span>
+    <span class="stat-label">Products</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-number" data-target="21" data-suffix="">0</span>
+    <span class="stat-label">Years of Service</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-number" data-target="100" data-suffix="%">0</span>
+    <span class="stat-label">India Presence</span>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div id="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>BOLTS</span><span class="divider">&#10022;</span>
+    <span>HEX NUTS</span><span class="divider">&#10022;</span>
+    <span>SPANNERS</span><span class="divider">&#10022;</span>
+    <span>SOCKET SETS</span><span class="divider">&#10022;</span>
+    <span>TORQUE TOOLS</span><span class="divider">&#10022;</span>
+    <span>PANEL PINS</span><span class="divider">&#10022;</span>
+    <span>WASHERS</span><span class="divider">&#10022;</span>
+    <span>SCREWDRIVERS</span><span class="divider">&#10022;</span>
+    <span>RATCHETS</span><span class="divider">&#10022;</span>
+    <span>AUTOMOTIVE GRADE</span><span class="divider">&#10022;</span>
+    <span>BOLTS</span><span class="divider">&#10022;</span>
+    <span>HEX NUTS</span><span class="divider">&#10022;</span>
+    <span>SPANNERS</span><span class="divider">&#10022;</span>
+    <span>SOCKET SETS</span><span class="divider">&#10022;</span>
+    <span>TORQUE TOOLS</span><span class="divider">&#10022;</span>
+    <span>PANEL PINS</span><span class="divider">&#10022;</span>
+    <span>WASHERS</span><span class="divider">&#10022;</span>
+    <span>SCREWDRIVERS</span><span class="divider">&#10022;</span>
+    <span>RATCHETS</span><span class="divider">&#10022;</span>
+    <span>AUTOMOTIVE GRADE</span><span class="divider">&#10022;</span>
+  </div>
+</div>
+
+<!-- products moved to products.html -->
+<section class="section-wrap" style="padding:3rem 2rem 2rem;">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-eyebrow">Our Range</p>
+    <h2 class="section-h2" style="margin-bottom:1.2rem;">ENGINEERED PRODUCT LINES</h2>
+    <p style="color:var(--text-mid);font-size:1rem;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;">500+ precision-engineered SKUs across fasteners, hand tools, torque tools and OEM custom tooling.</p>
+    <a href="products.html" class="btn btn-primary">View All Products</a>
+  </div>
+</section>
+
+<!-- careers moved to careers.html -->
+<section class="section-wrap alt" style="padding:3rem 2rem 2rem;">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-eyebrow">Join the Team</p>
+    <h2 class="section-h2" style="margin-bottom:1.2rem;">CAREERS AT GENERIC CNC ENGINEERS</h2>
+    <p style="color:var(--text-mid);font-size:1rem;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;">6 open positions across manufacturing, engineering, sales and operations. Come build with us.</p>
+    <a href="careers.html" class="btn btn-primary">See Open Roles</a>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="section-wrap">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left">
+        <p class="section-eyebrow">Our Story</p>
+        <h2 class="section-h2">BUILT IN COIMBATORE.<br>TRUSTED ACROSS INDIA.</h2>
+        <div class="section-rule"></div>
+        <p>Founded in 2004 in the industrial heartland of Coimbatore, Generic CNC Engineers began as a precision machining workshop serving the Tamil Nadu automotive and engineering belt. Over two decades, we have grown into a strong manufacturing force with dedicated production facilities and a presence across India.</p>
+        <p>Determined to offer a qualitative array of gearbox and automobile components, we have imbibed quality in each of our business operations. Our manufacturing processes are rigorously monitored through our total quality management system, ensuring every component meets the most demanding specifications.</p>
+        <p>Today, Generic CNC Engineers supplies leading OEMs and engineering companies across India. We don't chase volume — we chase precision. That philosophy has kept us in the supply chains of India's most demanding manufacturers for over two decades.</p>
+      </div>
+      <div class="about-right">
+        <div class="gear-wrap">
+          <svg class="gear-large" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#1a1c1f">
+            <path d="M43.3 5.2l-1.1 6.8c-2.6 0.6-5.1 1.5-7.4 2.8l-5.7-3.9-8.5 8.5 3.9 5.7c-1.3 2.3-2.2 4.8-2.8 7.4l-6.8 1.1v12l6.8 1.1c0.6 2.6 1.5 5.1 2.8 7.4l-3.9 5.7 8.5 8.5 5.7-3.9c2.3 1.3 4.8 2.2 7.4 2.8l1.1 6.8h12l1.1-6.8c2.6-0.6 5.1-1.5 7.4-2.8l5.7 3.9 8.5-8.5-3.9-5.7c1.3-2.3 2.2-4.8 2.8-7.4l6.8-1.1v-12l-6.8-1.1c-0.6-2.6-1.5-5.1-2.8-7.4l3.9-5.7-8.5-8.5-5.7 3.9c-2.3-1.3-4.8-2.2-7.4-2.8l-1.1-6.8h-12z"/>
+            <circle cx="50" cy="50" r="12" fill="#f0f0ee"/>
+          </svg>
+          <svg class="gear-small" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#d4430a">
+            <path d="M43.3 5.2l-1.1 6.8c-2.6 0.6-5.1 1.5-7.4 2.8l-5.7-3.9-8.5 8.5 3.9 5.7c-1.3 2.3-2.2 4.8-2.8 7.4l-6.8 1.1v12l6.8 1.1c0.6 2.6 1.5 5.1 2.8 7.4l-3.9 5.7 8.5 8.5 5.7-3.9c2.3 1.3 4.8 2.2 7.4 2.8l1.1 6.8h12l1.1-6.8c2.6-0.6 5.1-1.5 7.4-2.8l5.7 3.9 8.5-8.5-3.9-5.7c1.3-2.3 2.2-4.8 2.8-7.4l6.8-1.1v-12l-6.8-1.1c-0.6-2.6-1.5-5.1-2.8-7.4l3.9-5.7-8.5-8.5-5.7 3.9c-2.3-1.3-4.8-2.2-7.4-2.8l-1.1-6.8h-12z"/>
+            <circle cx="50" cy="50" r="12" fill="#f0f0ee"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUALITY ===== -->
+<section class="info-section">
+  <div class="info-grid">
+    <div class="info-text">
+      <p class="section-eyebrow">Our Commitment</p>
+      <h2 class="section-h2">QUALITY AT EVERY STEP</h2>
+      <div class="section-rule"></div>
+      <p>Determined to offer a qualitative array of gearbox and automobile components, we have imbibed quality in each of our business operations. The manufacturing processes are rigorously monitored through our total quality management system.</p>
+      <p>In order to ascertain conformation with set industrial and international standards, we have appointed expert quality controllers. Additionally, we make use of optimum grade aluminum and other metals to produce long lasting and durable products.</p>
+      <span class="info-badge">&#10003; IATF 16949 &amp; ISO/TS 16949:2009 Certified</span>
+    </div>
+    <div class="cert-card">
+      <!-- Certificate image — save as images/certificate-iatf.jpg -->
+      <img src="images/certificate-iatf.jpg"
+           alt="IATF 16949 Certificate — Generic CNC Engineers, TÜV SÜD"
+           class="cert-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <!-- Fallback text card shown if image missing -->
+      <div class="cert-fallback" style="display:none">
+        <div class="cert-logo-row">
+          <div class="cert-badge-box">TÜV SÜD</div>
+          <div class="cert-badge-box">IATF 16949</div>
+        </div>
+        <div class="cert-title">CERTIFICATE</div>
+        <div class="cert-subtitle">Quality Management System</div>
+        <div class="cert-body">
+          <strong>Generic CNC Engineers</strong>
+          160A, Elanthamara Thottam, Behind V.N. Industrial Estate,<br>
+          Bharathy Colony, Peelamedu,<br>
+          Coimbatore &mdash; 641004, Tamil Nadu, India
+        </div>
+        <div class="cert-body">
+          Certified for <strong>Manufacture of Metal Machined Components</strong>
+          (without Product Design as per Chapter 8.3)
+        </div>
+        <div class="cert-number">
+          Standard: <span>IATF 16949 First Edition 2016-10-01</span><br>
+          Cert. Reg. No.: <span>12 111 41290 TMS</span> &nbsp;&middot;&nbsp;
+          IATF No.: <span>0401143</span><br>
+          Issue: <span>2021-05-25</span> &nbsp;&middot;&nbsp; Expiry: <span>2024-05-24</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INFRASTRUCTURE ===== -->
+<section class="info-section alt">
+  <div class="section-inner">
+    <p class="section-eyebrow">Our Facility</p>
+    <h2 class="section-h2">INFRASTRUCTURE</h2>
+    <div class="info-grid" style="margin-top:0;">
+      <div class="info-text">
+        <p>Our robust infrastructure rightly deserves to be called a state-of-the-art facility, constructed over a large area in Coimbatore's industrial corridor. The in-house design, fabrication, testing and quality assurance facilities are well-equipped and form the backbone of our operations.</p>
+        <p>Our sophisticated production unit boasts hi-tech CNC equipment and machinery that facilitates on-time completion of every task undertaken. All machines and infrastructural facilities are maintained in pristine condition by dedicated department personnel, ensuring zero downtime and consistent output quality.</p>
+      </div>
+      <div class="why-us-grid" style="grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="why-us-item"><span class="why-us-icon">&#9881;</span><span class="why-us-text">CNC Machining Centres</span></div>
+        <div class="why-us-item"><span class="why-us-icon">&#128300;</span><span class="why-us-text">In-House Testing Lab</span></div>
+        <div class="why-us-item"><span class="why-us-icon">&#128736;</span><span class="why-us-text">Design &amp; Fabrication</span></div>
+        <div class="why-us-item"><span class="why-us-icon">&#128203;</span><span class="why-us-text">Quality Control Unit</span></div>
+        <div class="why-us-item"><span class="why-us-icon">&#127981;</span><span class="why-us-text">Large Production Area</span></div>
+        <div class="why-us-item"><span class="why-us-icon">&#128230;</span><span class="why-us-text">Dispatch &amp; Logistics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLIENT SATISFACTION ===== -->
+<section class="info-section">
+  <div class="section-inner">
+    <p class="section-eyebrow">Our Clients</p>
+    <h2 class="section-h2">CLIENT SATISFACTION</h2>
+    <div class="info-grid" style="margin-top:0;">
+      <div class="info-text">
+        <p>Generic CNC Engineers is making rapid progress in terms of increasing sales and client base across the nation. The impressive management of Mr. Dhanabal has helped us to carve a foothold in several untapped markets across India's automotive and industrial sectors.</p>
+        <p>The competition in the industry is fierce, because of this we want to offer innovative Automotive Components, Valve Components, Gearbox Components &amp; Textile Machinery Components. Our advanced business methodologies and fabrication facilities empower us to secure a potentially strong place in the industry. Moreover, we have dedicated professionals who regulate each and every activity in the best possible manner to attain the desired results.</p>
+        <div class="client-quote">
+          <p>"We are committed to deliver our customers an international range of products that are nothing less than the very best in this field. We ensure super fast deliveries with excellent customer service."</p>
+          <cite>— Mr. P. Thangavelu, Generic CNC Engineers</cite>
+        </div>
+      </div>
+      <div class="info-text">
+        <p class="section-eyebrow" style="margin-bottom:1.5rem;">Why Choose Us</p>
+        <div class="why-us-grid" style="grid-template-columns:1fr;">
+          <div class="why-us-item"><span class="why-us-icon">&#128101;</span><span class="why-us-text">Diligent Team Members</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#128666;</span><span class="why-us-text">Reliable Distribution Network</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#127959;</span><span class="why-us-text">Highly Skilled Labour</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#128336;</span><span class="why-us-text">Timely Delivery</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#127942;</span><span class="why-us-text">World Class Facilities</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#9878;</span><span class="why-us-text">Ethical Business Policy</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#128522;</span><span class="why-us-text">Complete Customer Satisfaction</span></div>
+          <div class="why-us-item"><span class="why-us-icon">&#128179;</span><span class="why-us-text">Easy Payment Mode Options</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUR CUSTOMERS ===== -->
+<section class="info-section alt">
+  <div class="section-inner">
+    <p class="section-eyebrow">Trusted By</p>
+    <h2 class="section-h2">OUR CUSTOMERS</h2>
+    <!-- Customers image — save as images/customers.jpg -->
+    <div class="customers-img-wrap">
+      <img src="images/customers.jpg"
+           alt="Our Customers — WABCO, GTN, Anugraha, SchuF, Peekay Steel, Bright Castings, Velan, ZF, Megawin, LLS, Greens Gears, Jai"
+           class="customers-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+      <!-- Fallback text grid if image missing -->
+      <div class="customers-fallback" style="display:none">
+        <div class="customer-name">WABCO</div>
+        <div class="customer-name">GTN</div>
+        <div class="customer-name">Anugraha</div>
+        <div class="customer-name">SchuF</div>
+        <div class="customer-name">Peekay Steel</div>
+        <div class="customer-name">Bright Castings</div>
+        <div class="customer-name">Velan</div>
+        <div class="customer-name">ZF</div>
+        <div class="customer-name">Megawin</div>
+        <div class="customer-name">LLS</div>
+        <div class="customer-name">Greens Gears</div>
+        <div class="customer-name">Jai</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="info-section">
+  <div class="section-inner">
+    <p class="section-eyebrow">Our Work</p>
+    <h2 class="section-h2">PRODUCT GALLERY</h2>
+    <p style="color:var(--text-mid);font-size:0.97rem;margin-bottom:2rem;max-width:600px;">Precision machined components manufactured at our Coimbatore facility — gearbox parts, valve components, pole wheels, and automotive assemblies.</p>
+    <div class="product-gallery">
+      <div class="gallery-item">
+        <img src="images/product-1.jpg" alt="Precision Machined Component 1"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+      <div class="gallery-item">
+        <img src="images/product-2.jpg" alt="Precision Machined Component 2"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+      <div class="gallery-item">
+        <img src="images/product-3.jpg" alt="Precision Machined Component 3"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+      <div class="gallery-item">
+        <img src="images/product-4.jpg" alt="Precision Machined Component 4"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+      <div class="gallery-item">
+        <img src="images/product-5.jpg" alt="Precision Machined Component 5"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+      <div class="gallery-item">
+        <img src="images/product-6.jpg" alt="Precision Machined Component 6"
+             onerror="this.parentElement.classList.add('gallery-placeholder')">
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="products.html" class="btn btn-primary">View All 58 Products</a>
+    </div>
+  </div>
+</section> -->
+
+<!-- contact moved to contact.html -->
+<section class="section-wrap" style="padding:3rem 2rem 2rem;">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-eyebrow">Get In Touch</p>
+    <h2 class="section-h2" style="margin-bottom:1.2rem;">CONTACT US</h2>
+    <p style="color:var(--text-mid);font-size:1rem;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;">Have a product inquiry, OEM requirement, or export question? We respond within one business day.</p>
+    <a href="contact.html" class="btn btn-primary">Send a Message</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="footer-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></div>
+  <p class="footer-tagline">Precision Machined &middot; Coimbatore, India &middot; Est. 2004</p>
+  <div class="footer-certs">
+    <span>ISO/TS 16949:2009</span>
+    <span>&middot;</span>
+    <span>TÜV SÜD Certified</span>
+    <span>&middot;</span>
+    <span>BIS Certified</span>
+    <span>&middot;</span>
+    <span>IATF No. 0125454</span>
+  </div>
+    <span>&middot;</span>
+    <span>Export Quality</span>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2024 GENERIC CNC ENGINEERS. All rights reserved. &nbsp;&middot;&nbsp; Coimbatore, Tamil Nadu, India
+  </div>
+</footer>
+
+<script>
+/* ===================================================
+   NAVBAR — scroll shadow + active link + hamburger
+   =================================================== */
+(function() {
+  const navbar = document.getElementById('navbar');
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  const navAs  = links.querySelectorAll('a:not(.nav-cta)');
+
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+    // Active link highlight
+    let current = '';
+    document.querySelectorAll('section[id], footer[id]').forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navAs.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  toggle.addEventListener('click', () => {
+    links.classList.toggle('open');
+  });
+  // Close on link click
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => links.classList.remove('open'));
+  });
+})();
+
+/* ===================================================
+   FALLING TOOLS CANVAS — white background version
+   =================================================== */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  const TOOL_TYPES = ['bolt','screw','spanner','hexNut','washer','socket'];
+  // Darker tones so tools are visible on white
+  const TOOL_COLORS = [
+    '#2a2d32','#3a3d42','#4a4f5a','#d4430a','#b03208',
+    '#1a1c1f','#555a65','#e8a820','#888d96','#c03a08'
+  ];
+  const MAX_TOOLS = 80;
+  let tools = [];
+  let frame = 0;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
+  function pick(arr) { return arr[randInt(0, arr.length - 1)]; }
+
+  function spawnTool() {
+    return {
+      x: rand(0, canvas.width),
+      y: rand(-80, -20),
+      vx: rand(-0.7, 0.7),
+      vy: rand(0.6, 2.8),
+      rot: rand(0, Math.PI * 2),
+      vrot: rand(-0.07, 0.07),
+      type: pick(TOOL_TYPES),
+      sz: rand(20, 44),
+      color: pick(TOOL_COLORS),
+      floor: rand(canvas.height * 0.45, canvas.height * 0.92),
+      alpha: 0,
+      bounces: 0,
+      settled: false
+    };
+  }
+
+  function drawBolt(ctx, sz, color) {
+    const headR = sz * 0.35, shaftW = sz * 0.20, shaftH = sz * 0.70;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i - Math.PI / 6;
+      i === 0 ? ctx.moveTo(Math.cos(a)*headR, Math.sin(a)*headR - sz*0.15)
+              : ctx.lineTo(Math.cos(a)*headR, Math.sin(a)*headR - sz*0.15);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.fillRect(-shaftW/2, sz*0.05, shaftW, shaftH);
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1;
+    for (let i = 0; i < 4; i++) {
+      const ty = sz*0.15 + i*(shaftH/4.5);
+      ctx.beginPath(); ctx.moveTo(-shaftW/2, ty); ctx.lineTo(shaftW/2, ty); ctx.stroke();
+    }
+  }
+
+  function drawScrew(ctx, sz, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(0, -sz*0.3, sz*0.35, sz*0.18, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = sz*0.06;
+    ctx.beginPath(); ctx.moveTo(-sz*0.2, -sz*0.3); ctx.lineTo(sz*0.2, -sz*0.3); ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(-sz*0.12, -sz*0.12); ctx.lineTo(sz*0.12, -sz*0.12);
+    ctx.lineTo(sz*0.02, sz*0.5);    ctx.lineTo(-sz*0.02, sz*0.5);
+    ctx.closePath(); ctx.fill();
+  }
+
+  function drawSpanner(ctx, sz, color) {
+    ctx.strokeStyle = color; ctx.lineWidth = sz*0.18; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, sz*0.5); ctx.lineTo(0, -sz*0.1); ctx.stroke();
+    ctx.lineWidth = sz*0.14;
+    ctx.beginPath(); ctx.arc(-sz*0.12, -sz*0.35, sz*0.22, Math.PI*0.1, Math.PI*0.9); ctx.stroke();
+    ctx.beginPath(); ctx.arc(sz*0.12, sz*0.1, sz*0.18, Math.PI*1.1, Math.PI*1.9); ctx.stroke();
+  }
+
+  function drawHexNut(ctx, sz, color) {
+    const r = sz*0.45;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI/3)*i - Math.PI/6;
+      i === 0 ? ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r) : ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(0, 0, r*0.42, 0, Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function drawWasher(ctx, sz, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(0, 0, sz*0.45, 0, Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(0, 0, sz*0.22, 0, Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function drawSocket(ctx, sz, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < 8; i++) {
+      const a = (Math.PI/4)*i - Math.PI/8;
+      i === 0 ? ctx.moveTo(Math.cos(a)*sz*0.45, Math.sin(a)*sz*0.45)
+              : ctx.lineTo(Math.cos(a)*sz*0.45, Math.sin(a)*sz*0.45);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI/3)*i - Math.PI/6;
+      i === 0 ? ctx.moveTo(Math.cos(a)*sz*0.28, Math.sin(a)*sz*0.28)
+              : ctx.lineTo(Math.cos(a)*sz*0.28, Math.sin(a)*sz*0.28);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  const drawFns = { bolt:drawBolt, screw:drawScrew, spanner:drawSpanner, hexNut:drawHexNut, washer:drawWasher, socket:drawSocket };
+
+  function drawTool(t) {
+    ctx.save();
+    ctx.translate(t.x, t.y);
+    ctx.rotate(t.rot);
+    ctx.globalAlpha = t.settled ? t.alpha * 0.18 : t.alpha * 0.55;
+    drawFns[t.type](ctx, t.sz, t.color);
+    ctx.restore();
+  }
+
+  function updateTool(t) {
+    if (t.settled) return;
+    t.alpha = Math.min(1, t.alpha + 0.04);
+    t.vy += 0.055; t.x += t.vx; t.y += t.vy; t.rot += t.vrot;
+    if (t.y > t.floor) {
+      t.y = t.floor; t.vy *= -0.42; t.vx *= 0.85; t.vrot *= 0.7; t.bounces++;
+      if (t.bounces >= 2 && Math.abs(t.vy) < 0.4) { t.settled = true; t.settledAt = frame; }
+    }
+    if (t.x < -60) t.x = canvas.width + 60;
+    if (t.x > canvas.width + 60) t.x = -60;
+  }
+
+  // Pre-populate
+  for (let i = 0; i < 30; i++) {
+    const t = spawnTool();
+    t.y = rand(canvas.height * 0.1, canvas.height * 0.9);
+    t.alpha = rand(0.4, 1);
+    t.settled = Math.random() > 0.5;
+    if (t.settled) { t.settledAt = 0; t.bounces = 2; }
+    tools.push(t);
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (frame % 18 === 0 && tools.length < MAX_TOOLS) tools.push(spawnTool());
+    if (frame % 600 === 0) {
+      tools = tools.map(t => (t.settled && Math.random() > 0.5) ? spawnTool() : t);
+    }
+    tools.forEach(t => { updateTool(t); drawTool(t); });
+    frame++;
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ===================================================
+   STATS COUNT-UP
+   =================================================== */
+(function() {
+  const nums = document.querySelectorAll('.stat-number');
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function animateCount(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const start = performance.now();
+    (function step(now) {
+      const p = Math.min((now - start) / 2000, 1);
+      el.textContent = Math.floor(easeOut(p) * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); observer.unobserve(e.target); } });
+  }, { threshold: 0.5 }).observe;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); observer.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  nums.forEach(n => observer.observe(n));
+})();
+
+/* ===================================================
+   CONTACT FORM SUBMIT
+   =================================================== */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = 'Message Sent!';
+  btn.style.background = '#2a7a2a';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.style.background = '';
+    btn.disabled = false;
+    e.target.reset();
+  }, 3500);
+}
+
+/* ===================================================
+   SCROLL REVEAL — fade-up on section entry
+   =================================================== */
+(function() {
+  const style = document.createElement('style');
+  style.textContent = '.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; } .reveal.visible { opacity: 1; transform: none; }';
+  document.head.appendChild(style);
+  document.querySelectorAll('.product-card, .achievement-card, .career-card, .contact-item, .about-left p').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i % 4) * 0.08 + 's';
+  });
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 }).observe;
+
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+})();
+</script>
+<script src="transition.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<style id="pt-antiflash">html,body{background:#fdf6f0 !important}.nav-logo{transition:none !important}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Generic CNC Engineers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--iron:#0e0f11;--steel:#1a1c1f;--chrome:#5a5f6a;--rust:#d4430a;--gold:#e8a820;--white:  #fdf6f0;--offwhite: #f5ebe0;--light-border: #e8d8c8;--text-dark:#1a1c1f;--text-mid:#4a4f5a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text-dark);font-family:"Barlow",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background: rgba(253,246,240,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--light-border);transition:box-shadow 0.3s;}
+#navbar.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08);}
+.nav-inner{width:100%;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;color:var(--text-dark);letter-spacing:0.04em;display:flex;align-items:center;gap:8px;flex-shrink:0;white-space:nowrap;margin-right:auto;}
+.nav-logo .star{color:var(--rust);}
+.nav-links{display:flex;align-items:center;gap:0.25rem;list-style:none;}
+.nav-links a{font-family:"Barlow Condensed",sans-serif;font-size:0.9rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);padding:0.5rem 0.9rem;position:relative;transition:color 0.2s;}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0.9rem;right:0.9rem;height:2px;background:var(--rust);transform:scaleX(0);transition:transform 0.2s;}
+.nav-links a:hover{color:var(--rust);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--rust);}
+.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{background:var(--rust)!important;color:var(--white)!important;padding:0.55rem 1.4rem!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))!important;}
+.nav-cta:hover{background:#c03a08!important;}
+.nav-cta::after{display:none!important;}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--text-dark);}
+/* BANNER */
+.page-banner{background:var(--offwhite);padding:7rem 2rem 4.5rem;margin-top:64px;position:relative;overflow:hidden;}.page-banner{border-bottom:1px solid var(--light-border);}
+.page-banner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(212,67,10,0.03) 2px,rgba(212,67,10,0.03) 4px);pointer-events:none;}
+.page-banner-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+
+.breadcrumb a{color:var(--chrome);transition:color 0.2s;}
+.breadcrumb a:hover{color:var(--rust);}
+.breadcrumb .sep{color:var(--light-border);}
+.page-banner-eyebrow{font-family:"Barlow Condensed",sans-serif;font-size:0.78rem;letter-spacing:0.5em;color:var(--rust);text-transform:uppercase;margin-bottom:0.8rem;}
+.page-banner h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(3rem,7vw,6.5rem);color:var(--text-dark);line-height:0.9;margin-bottom:1.2rem;}
+.page-banner h1 span{color:var(--rust);}
+.page-banner p{font-size:1rem;color:var(--text-mid);max-width:520px;line-height:1.65;}
+/* CONTACT LAYOUT */
+.contact-section{padding:5rem 2rem;}
+.contact-section.alt{background:var(--offwhite);}
+.contact-inner{max-width:1100px;margin:0 auto;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start;}
+/* INFO SIDE */
+.contact-info-title{font-family:"Bebas Neue",sans-serif;font-size:1.8rem;color:var(--text-dark);margin-bottom:0.5rem;letter-spacing:0.03em;}
+.contact-info-sub{font-size:0.92rem;color:var(--text-mid);line-height:1.65;margin-bottom:2.5rem;max-width:340px;}
+.contact-item{display:flex;gap:1rem;margin-bottom:2rem;align-items:flex-start;}
+.contact-icon{width:44px;height:44px;background:var(--rust);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+.contact-item-text strong{display:block;font-family:"Barlow Condensed",sans-serif;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:0.3rem;}
+.contact-item-text span{font-size:0.92rem;color:var(--text-mid);line-height:1.6;}
+.social-row{margin-top:2.5rem;}
+.social-label{font-family:"Barlow Condensed",sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--chrome);margin-bottom:0.8rem;}
+.social-links{display:flex;gap:0.6rem;}
+.social-link{width:38px;height:38px;border:1px solid var(--light-border);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--text-mid);transition:all 0.2s;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+.social-link:hover{background:var(--rust);color:var(--white);border-color:var(--rust);}
+/* FORM */
+.contact-form-wrap{background:#fdf6f0;border:1px solid var(--light-border);padding:2.8rem;}
+.form-title{font-family:"Bebas Neue",sans-serif;font-size:1.6rem;color:var(--text-dark);margin-bottom:0.4rem;letter-spacing:0.03em;}
+.form-subtitle{font-size:0.85rem;color:var(--text-mid);margin-bottom:2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.2rem;}
+.form-group label{font-family:"Barlow Condensed",sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);}
+.form-group input,.form-group select,.form-group textarea{font-family:"Barlow",sans-serif;font-size:0.92rem;color:var(--text-dark);background: #f5ebe0;border:1px solid var(--light-border);padding:0.8rem 1rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;width:100%;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--rust);box-shadow:0 0 0 3px rgba(212,67,10,0.08);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a4f5a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;}
+.form-submit{width:100%;font-family:"Barlow Condensed",sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:1rem 2rem;background:var(--rust);color:var(--white);border:none;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));cursor:pointer;transition:background 0.2s,transform 0.15s;}
+.form-submit:hover{background:#c03a08;transform:translateY(-1px);}
+.form-submit:disabled{background:#888;cursor:not-allowed;transform:none;}
+.form-success{display:none;text-align:center;padding:2rem;background:#f0faf0;border:1px solid #b8e0b8;}
+.form-success .success-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+.form-success h3{font-family:"Bebas Neue",sans-serif;font-size:1.6rem;color:#2a7a2a;margin-bottom:0.5rem;}
+.form-success p{font-size:0.9rem;color:#4a6a4a;}
+/* MAP PLACEHOLDER */
+.map-section{background:var(--iron);padding:4rem 2rem;}
+.map-inner{max-width:1100px;margin:0 auto;}
+.map-title{font-family:"Bebas Neue",sans-serif;font-size:1.6rem;color:var(--white);margin-bottom:1.5rem;letter-spacing:0.03em;}
+.map-box{background:#0d0e10;border:1px solid #1e2025;height:320px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.map-box::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,#1a1c1f 39px,#1a1c1f 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,#1a1c1f 39px,#1a1c1f 40px);opacity:0.4;}
+.map-pin{position:relative;z-index:1;text-align:center;}
+.map-pin-dot{width:16px;height:16px;background:var(--rust);margin:0 auto 0.5rem;clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);animation:pinPulse 2s ease-in-out infinite;}
+.map-pin-label{font-family:"Barlow Condensed",sans-serif;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;color:#666;}
+.map-pin-city{font-family:"Bebas Neue",sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.05em;}
+@keyframes pinPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+/* OFFICES */
+.offices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2rem;}
+.office-card{background:#14161a;border:1px solid #252830;padding:1.5rem;transition:border-color 0.2s;}
+.office-card:hover{border-color:var(--rust);}
+.office-city{font-family:"Bebas Neue",sans-serif;font-size:1.3rem;color:var(--white);margin-bottom:0.3rem;}
+.office-type{font-family:"Barlow Condensed",sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:0.8rem;}
+.office-addr{font-size:0.82rem;color:#666;line-height:1.6;}
+/* FOOTER */
+#footer{background:var(--iron);border-top:1px solid #1e2025;padding:3rem 2rem;text-align:center;}
+.footer-logo{font-family:"Bebas Neue",sans-serif;font-size:2.2rem;color:var(--white);letter-spacing:0.05em;margin-bottom:0.4rem;}
+.footer-logo .star{color:var(--rust);}
+.footer-tagline{font-family:"Barlow Condensed",sans-serif;font-size:0.75rem;letter-spacing:0.4em;text-transform:uppercase;color:#444;margin-bottom:1.5rem;}
+.footer-certs{font-family:"Barlow Condensed",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#333;}
+.footer-certs span{margin:0 0.5em;}
+.footer-bottom{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #1e2025;font-size:0.75rem;color:#333;font-family:"Barlow Condensed",sans-serif;letter-spacing:0.1em;}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:2.5rem;}}
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--light-border);padding:1rem 0;gap:0;}
+  .nav-links.open{display:flex;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:0.75rem 2rem;}
+  .nav-toggle{display:flex;}
+  .form-row{grid-template-columns:1fr;}
+  .contact-form-wrap{padding:1.8rem;}
+}
+
+
+.nav-logo .star { color: var(--rust); }
+.brand-logo-svg { filter: drop-shadow(0 1px 2px rgba(212,67,10,0.18)); transition: filter 0.2s; }
+.nav-logo:hover .brand-logo-svg { filter: drop-shadow(0 2px 6px rgba(212,67,10,0.35)); }
+.footer-logo { display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important; }
+.footer-logo .brand-logo-svg { filter: brightness(1.1) drop-shadow(0 1px 4px rgba(212,67,10,0.3)); }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html" class="nav-cta active">Contact Us</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">&#8250;</span>
+      <span>Contact Us</span>
+    </div>
+    <p class="page-banner-eyebrow">Sales &middot; Exports &middot; OEM Partnerships</p>
+    <h1>GET IN <span>TOUCH</span></h1>
+    <p>Whether you need a product quote, want to discuss an OEM partnership, or are exploring export opportunities — our team responds within 24 hours.</p>
+  </div>
+</div>
+
+<section class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-info-title">LET'S TALK PRECISION</div>
+        <p class="contact-info-sub">We work directly with procurement teams, distributors, and OEM engineers. No middlemen, no delays.</p>
+        <div class="contact-item">
+          <div class="contact-icon">&#128205;</div>
+          <div class="contact-item-text">
+            <strong>Head Office</strong>
+            <span>Plot 14, SIDCO Industrial Estate,<br>Coimbatore &mdash; 641 021,<br>Tamil Nadu, India</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">&#128222;</div>
+          <div class="contact-item-text">
+            <strong>Phone</strong>
+            <span>+91 422 245 6789<br>+91 422 245 6790</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">&#9993;</div>
+          <div class="contact-item-text">
+            <strong>Email</strong>
+            <span>sales@genericcncengineers.in<br>exports@genericcncengineers.in</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">&#128336;</div>
+          <div class="contact-item-text">
+            <strong>Working Hours</strong>
+            <span>Monday &ndash; Saturday<br>8:00 AM &ndash; 6:00 PM IST</span>
+          </div>
+        </div>
+        <div class="social-row">
+          <div class="social-label">Follow Us</div>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="Twitter">&#120143;</a>
+            <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+            <a href="#" class="social-link" aria-label="WhatsApp">&#128172;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal">
+        <div class="form-title">SEND US A MESSAGE</div>
+        <p class="form-subtitle">Fill in the form and our team will respond within one business day.</p>
+        <form id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name *</label>
+              <input type="text" id="fname" name="fname" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name *</label>
+              <input type="text" id="lname" name="lname" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="john@company.com" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Acme Automotive Ltd.">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country">
+              <option value="">Select your country</option>
+              <option>India</option>
+              <option>Germany</option>
+              <option>United Kingdom</option>
+              <option>United States</option>
+              <option>Japan</option>
+              <option>South Korea</option>
+              <option>UAE</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inquiry">Inquiry Type *</label>
+            <select id="inquiry" name="inquiry" required>
+              <option value="">Select inquiry type</option>
+              <option>Product Quote / Pricing</option>
+              <option>OEM Partnership</option>
+              <option>Export / Distribution</option>
+              <option>Technical Specifications</option>
+              <option>Careers</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" placeholder="Describe your requirements, quantities, and any specific standards or certifications needed..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submit-btn">Send Message &#8594;</button>
+        </form>
+        <div class="form-success" id="form-success">
+          <div class="success-icon">&#10003;</div>
+          <h3>MESSAGE RECEIVED</h3>
+          <p>Thank you for reaching out. Our team will respond within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="map-section">
+  <div class="map-inner">
+    <div class="map-title">OUR LOCATIONS</div>
+    <div class="map-box">
+      <div class="map-pin">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-label">Headquarters</div>
+        <div class="map-pin-city">COIMBATORE, INDIA</div>
+      </div>
+    </div>
+    <div class="offices-grid">
+      <div class="office-card">
+        <div class="office-city">COIMBATORE</div>
+        <div class="office-type">Head Office &amp; Manufacturing</div>
+        <div class="office-addr">Plot 14, SIDCO Industrial Estate,<br>Coimbatore &mdash; 641 021, Tamil Nadu</div>
+      </div>
+      <div class="office-card">
+        <div class="office-city">CHENNAI</div>
+        <div class="office-type">Regional Sales Office</div>
+        <div class="office-addr">No. 8, Anna Salai,<br>Chennai &mdash; 600 002, Tamil Nadu</div>
+      </div>
+      <div class="office-card">
+        <div class="office-city">MUMBAI</div>
+        <div class="office-type">Export Liaison Office</div>
+        <div class="office-addr">Unit 4B, SEEPZ SEZ,<br>Andheri East, Mumbai &mdash; 400 096</div>
+      </div>
+      <div class="office-card">
+        <div class="office-city">DELHI NCR</div>
+        <div class="office-type">North India Sales</div>
+        <div class="office-addr">Plot 22, Sector 5, IMT Manesar,<br>Gurugram &mdash; 122 050, Haryana</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="footer-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></div>
+  <p class="footer-tagline">Precision Forged &middot; Coimbatore, India &middot; Est. 2004</p>
+  <div class="footer-certs">
+    <span>ISO 9001:2015</span><span>&middot;</span><span>TS 16949</span><span>&middot;</span><span>BIS Certified</span><span>&middot;</span><span>Export Quality</span>
+  </div>
+  <div class="footer-bottom">&copy; 2024 GENERIC CNC ENGINEERS. All rights reserved. &nbsp;&middot;&nbsp; Coimbatore, Tamil Nadu, India</div>
+</footer>
+
+<script>
+(function(){
+  const nb=document.getElementById("navbar");
+  const tg=document.getElementById("nav-toggle");
+  const nl=document.getElementById("nav-links");
+  window.addEventListener("scroll",()=>nb.classList.toggle("scrolled",window.scrollY>10));
+  tg.addEventListener("click",()=>nl.classList.toggle("open"));
+  nl.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nl.classList.remove("open")));
+})();
+document.getElementById("contact-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  const btn=document.getElementById("submit-btn");
+  btn.textContent="Sending...";
+  btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById("contact-form").style.display="none";
+    document.getElementById("form-success").style.display="block";
+  },1200);
+});
+(function(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});
+  },{threshold:0.1});
+  document.querySelectorAll(".reveal").forEach((el,i)=>{
+    el.style.transitionDelay=i*0.1+"s";
+    obs.observe(el);
+  });
+})();
+</script>
+<script src="transition.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

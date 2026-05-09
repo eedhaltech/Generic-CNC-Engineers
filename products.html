@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<style id="pt-antiflash">html,body{background:#fdf6f0 !important}.nav-logo{transition:none !important}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Generic CNC Engineers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--iron:#0e0f11;--steel:#1a1c1f;--chrome:#5a5f6a;--rust:#d4430a;--gold:#e8a820;--white:#fdf6f0;--offwhite:#f5ebe0;--light-border:#e8d8c8;--text-dark:#1a1c1f;--text-mid:#4a4f5a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text-dark);font-family:"Barlow",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+/* NAVBAR */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(253,246,240,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--light-border);transition:box-shadow 0.3s;}
+#navbar.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08);}
+.nav-inner{width:100%;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.nav-logo{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;color:var(--text-dark);letter-spacing:0.04em;display:flex;align-items:center;gap:8px;flex-shrink:0;white-space:nowrap;}
+.nav-logo .star{color:var(--rust);}
+.nav-links{display:flex;align-items:center;gap:0.25rem;list-style:none;flex-shrink:0;}
+.nav-links a{font-family:"Barlow Condensed",sans-serif;font-size:0.9rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);padding:0.5rem 0.9rem;position:relative;transition:color 0.2s;white-space:nowrap;}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0.9rem;right:0.9rem;height:2px;background:var(--rust);transform:scaleX(0);transition:transform 0.2s;}
+.nav-links a:hover{color:var(--rust);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--rust);}
+.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{background:var(--rust)!important;color:var(--white)!important;padding:0.55rem 1.4rem!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))!important;border-radius:0!important;}
+.nav-cta:hover{background:#c03a08!important;}
+.nav-cta::after{display:none!important;}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;flex-shrink:0;}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--text-dark);transition:all 0.3s;}
+.brand-logo-svg{filter:drop-shadow(0 1px 2px rgba(212,67,10,0.18));transition:filter 0.2s;}
+.nav-logo:hover .brand-logo-svg{filter:drop-shadow(0 2px 6px rgba(212,67,10,0.35));}
+/* BANNER */
+.page-banner{background:var(--offwhite);padding:7rem 2rem 4rem;margin-top:64px;position:relative;overflow:hidden;border-bottom:1px solid var(--light-border);}
+.page-banner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(212,67,10,0.03) 2px,rgba(212,67,10,0.03) 4px);pointer-events:none;}
+.page-banner-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.2rem;font-family:"Barlow Condensed",sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--chrome);}
+.breadcrumb a{color:var(--chrome);transition:color 0.2s;}
+.breadcrumb a:hover{color:var(--rust);}
+.breadcrumb .sep{color:var(--light-border);}
+.page-banner-eyebrow{font-family:"Barlow Condensed",sans-serif;font-size:0.78rem;letter-spacing:0.5em;color:var(--rust);text-transform:uppercase;margin-bottom:0.8rem;}
+.page-banner h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(3rem,7vw,6.5rem);color:var(--text-dark);line-height:0.9;margin-bottom:1.2rem;}
+.page-banner h1 span{color:var(--rust);}
+.page-banner p{font-size:1rem;color:var(--text-mid);max-width:560px;line-height:1.65;}
+/* STATS ROW */
+.prod-stats{display:flex;background:var(--iron);border-bottom:1px solid #222;}
+.prod-stat{flex:1;padding:2rem 1.5rem;text-align:center;border-right:1px solid #222;}
+.prod-stat:last-child{border-right:none;}
+.prod-stat-num{font-family:"Bebas Neue",sans-serif;font-size:2.8rem;color:var(--rust);line-height:1;display:block;}
+.prod-stat-label{font-family:"Barlow Condensed",sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#666;margin-top:0.3rem;display:block;}
+/* FILTER */
+.filter-bar{background:var(--white);border-bottom:1px solid var(--light-border);padding:1rem 2rem;position:sticky;top:64px;z-index:100;}
+.filter-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+.filter-label{font-family:"Barlow Condensed",sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--chrome);margin-right:0.4rem;flex-shrink:0;}
+.filter-btn{font-family:"Barlow Condensed",sans-serif;font-size:0.76rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.38rem 0.9rem;background:transparent;border:1px solid var(--light-border);color:var(--text-mid);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.filter-btn:hover,.filter-btn.active{background:var(--rust);color:var(--white);border-color:var(--rust);}
+.filter-count{margin-left:auto;font-family:"Barlow Condensed",sans-serif;font-size:0.78rem;letter-spacing:0.1em;color:var(--chrome);flex-shrink:0;}
+/* GRID */
+.section-wrap{padding:3.5rem 2rem;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;}
+.product-card{background:var(--white);border:1px solid var(--light-border);position:relative;overflow:hidden;transition:transform 0.22s,box-shadow 0.22s;cursor:default;display:flex;flex-direction:column;}
+.product-card::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--rust);transform:scaleX(0);transform-origin:left;transition:transform 0.28s;}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,0.09);}
+.product-card:hover::after{transform:scaleX(1);}
+/* Image area */
+.card-img-wrap{width:100%;aspect-ratio:4/3;overflow:hidden;background:#f5ebe0;border-bottom:1px solid var(--light-border);flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.img-fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:2.4rem;opacity:0.22;color:var(--text-mid);background:linear-gradient(135deg,#f5ebe0,#efe2d6);}
+/* Card body */
+.card-body{padding:1.1rem 1.2rem;}
+.card-cat{font-family:"Barlow Condensed",sans-serif;font-size:0.62rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--rust);margin-bottom:0.5rem;}
+.card-name{font-family:"Barlow Condensed",sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-dark);line-height:1.2;}
+/* STANDARDS */
+.standards-strip{background:var(--iron);padding:3rem 2rem;}
+.standards-inner{max-width:1100px;margin:0 auto;}
+.standards-title{font-family:"Bebas Neue",sans-serif;font-size:1.4rem;color:var(--white);margin-bottom:1.5rem;letter-spacing:0.05em;}
+.standards-grid{display:flex;flex-wrap:wrap;gap:0.8rem;}
+.std-badge{font-family:"Barlow Condensed",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.45rem 1rem;border:1px solid #2a2d32;color:#666;transition:all 0.2s;}
+.std-badge:hover{border-color:var(--rust);color:var(--rust);}
+/* CTA */
+.cta-band{background:var(--rust);padding:4rem 2rem;text-align:center;}
+.cta-band h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(2rem,4vw,3rem);color:var(--white);margin-bottom:0.8rem;}
+.cta-band p{font-size:1rem;color:rgba(255,255,255,0.85);margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;}
+.btn-white{background:var(--white);color:var(--rust);font-family:"Barlow Condensed",sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.85rem 2rem;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));display:inline-block;transition:background 0.2s,transform 0.15s;border:none;cursor:pointer;}
+.btn-white:hover{background:#f5ebe0;transform:translateY(-2px);}
+/* FOOTER */
+#footer{background:var(--iron);border-top:1px solid #1e2025;padding:3rem 2rem;text-align:center;}
+.footer-logo{font-family:"Bebas Neue",sans-serif;font-size:2.2rem;color:var(--white);letter-spacing:0.05em;margin-bottom:0.4rem;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;}
+.footer-logo .star{color:var(--rust);}
+.footer-tagline{font-family:"Barlow Condensed",sans-serif;font-size:0.75rem;letter-spacing:0.4em;text-transform:uppercase;color:#444;margin-bottom:1.5rem;}
+.footer-certs{font-family:"Barlow Condensed",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#333;}
+.footer-certs span{margin:0 0.5em;}
+.footer-bottom{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #1e2025;font-size:0.75rem;color:#333;font-family:"Barlow Condensed",sans-serif;letter-spacing:0.1em;}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:900px){
+  .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(253,246,240,0.98);border-bottom:1px solid var(--light-border);padding:1rem 0;gap:0;z-index:999;}
+  .nav-links.open{display:flex;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:0.75rem 2rem;white-space:nowrap;}
+  .nav-toggle{display:flex;}
+  .prod-stats{flex-wrap:wrap;}
+  .prod-stat{flex:1 1 50%;}
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">&#8250;</span><span>Products</span></div>
+    <p class="page-banner-eyebrow">58 Product Lines &middot; IATF 16949 Certified &middot; Coimbatore, India</p>
+    <h1>OUR <span>PRODUCT</span> RANGE</h1>
+    <p>Precision machined components for Automobile, Valve, Gear &amp; General Engineering. Manufactured to international standards with zero rejection target.</p>
+  </div>
+</div>
+
+<div class="prod-stats">
+  <div class="prod-stat"><span class="prod-stat-num">16+</span><span class="prod-stat-label">Years Experience</span></div>
+  <div class="prod-stat"><span class="prod-stat-num">3</span><span class="prod-stat-label">Manufacturing Units</span></div>
+  <div class="prod-stat"><span class="prod-stat-num">58</span><span class="prod-stat-label">Product Lines</span></div>
+  <div class="prod-stat"><span class="prod-stat-num">Zero</span><span class="prod-stat-label">Rejection Target</span></div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">All Products</button>
+    <button class="filter-btn" data-filter="msa">MSA Body Assembly</button>
+    <button class="filter-btn" data-filter="pole">Pole Wheel (ABS)</button>
+    <button class="filter-btn" data-filter="precision">Precision Machined</button>
+    <button class="filter-btn" data-filter="pump">Pump &amp; Valve Parts</button>
+    <button class="filter-btn" data-filter="valve">Valve &amp; Precision Parts</button>
+    <button class="filter-btn" data-filter="gear">Gear &amp; Flange Parts</button>
+    <span class="filter-count" id="filter-count">Showing all 58 products</span>
+  </div>
+</div>
+
+<section class="section-wrap">
+  <div class="section-inner">
+    <div class="products-grid" id="products-grid">
+
+      <!-- MSA Body Assembly (9) -->
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-body.jpg" alt="MSA Body Assembly — Body" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Body</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-worm-gear.jpg" alt="MSA Body Assembly — Worm Gear" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Worm Gear</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-worm-shaft.jpg" alt="MSA Body Assembly — Worm Shaft" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Worm Shaft</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-lock-nut.jpg" alt="MSA Body Assembly — Lock Nut" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Lock Nut</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-spring.jpg" alt="MSA Body Assembly — Spring" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Spring</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-worm.jpg" alt="MSA Body Assembly — Worm" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">Worm</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-assembly-1.jpg" alt="MSA Body Assembly — MSA Body Assembly #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">MSA Body Assembly #1</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-sub-assembly.jpg" alt="MSA Body Assembly — MSA Sub-Assembly" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">MSA Sub-Assembly</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="msa">
+        <div class="card-img-wrap" style="background:#eee8e0;">
+          <img src="images/products/msa-assembly-2.jpg" alt="MSA Body Assembly — MSA Body Assembly #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">MSA Body Assembly</div><div class="card-name">MSA Body Assembly #2</div></div>
+      </div>
+
+      <!-- Pole Wheel (ABS) (5) -->
+      <div class="product-card reveal" data-cat="pole">
+        <div class="card-img-wrap" style="background:#f0ece8;">
+          <img src="images/products/pole-wheel-1.jpg" alt="Pole Wheel (ABS) — Pole Wheel #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">Pole Wheel (ABS)</div><div class="card-name">Pole Wheel #1</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="pole">
+        <div class="card-img-wrap" style="background:#f0ece8;">
+          <img src="images/products/pole-wheel-2.jpg" alt="Pole Wheel (ABS) — Pole Wheel #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">Pole Wheel (ABS)</div><div class="card-name">Pole Wheel #2</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="pole">
+        <div class="card-img-wrap" style="background:#f0ece8;">
+          <img src="images/products/pole-wheel-3.jpg" alt="Pole Wheel (ABS) — Pole Wheel #3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">Pole Wheel (ABS)</div><div class="card-name">Pole Wheel #3</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="pole">
+        <div class="card-img-wrap" style="background:#f0ece8;">
+          <img src="images/products/pole-wheel-4.jpg" alt="Pole Wheel (ABS) — Pole Wheel #4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">Pole Wheel (ABS)</div><div class="card-name">Pole Wheel #4</div></div>
+      </div>
+      <div class="product-card reveal" data-cat="pole">
+        <div class="card-img-wrap" style="background:#f0ece8;">
+          <img src="images/products/pole-wheel-5.jpg" alt="Pole Wheel (ABS) — Pole Wheel #5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-fallback">⚙</div>
+        </div>
+        <div class="card-body"><div class="card-cat">Pole Wheel (ABS)</div><div class="card-name">Pole Wheel #5</div></div>
+      </div>
+
+      <!-- Precision Machined (20) -->
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-1.jpg" alt="Precision Machined — Precision Component #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #1</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-2.jpg" alt="Precision Machined — Precision Component #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #2</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-3.jpg" alt="Precision Machined — Precision Component #3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #3</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-4.jpg" alt="Precision Machined — Precision Component #4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #4</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-5.jpg" alt="Precision Machined — Precision Component #5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #5</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-6.jpg" alt="Precision Machined — Precision Component #6" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #6</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-7.jpg" alt="Precision Machined — Precision Component #7" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #7</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-8.jpg" alt="Precision Machined — Precision Component #8" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #8</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-9.jpg" alt="Precision Machined — Precision Component #9" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #9</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-10.jpg" alt="Precision Machined — Precision Component #10" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #10</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-11.jpg" alt="Precision Machined — Precision Component #11" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #11</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-12.jpg" alt="Precision Machined — Precision Component #12" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #12</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-13.jpg" alt="Precision Machined — Precision Component #13" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #13</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-14.jpg" alt="Precision Machined — Precision Component #14" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #14</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-15.jpg" alt="Precision Machined — Precision Component #15" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #15</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-16.jpg" alt="Precision Machined — Precision Component #16" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #16</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-17.jpg" alt="Precision Machined — Precision Component #17" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #17</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-18.jpg" alt="Precision Machined — Precision Component #18" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #18</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-19.jpg" alt="Precision Machined — Precision Component #19" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #19</div></div></div>
+      <div class="product-card reveal" data-cat="precision"><div class="card-img-wrap" style="background:#eae4dc;"><img src="images/products/precision-20.jpg" alt="Precision Machined — Precision Component #20" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Precision Machined</div><div class="card-name">Precision Component #20</div></div></div>
+
+      <!-- Pump & Valve Parts (4) -->
+      <div class="product-card reveal" data-cat="pump"><div class="card-img-wrap" style="background:#ede4d0;"><img src="images/products/pump-valve-1.jpg" alt="Pump &amp; Valve Parts — Pump &amp; Valve Part #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Pump &amp; Valve Parts</div><div class="card-name">Pump &amp; Valve Part #1</div></div></div>
+      <div class="product-card reveal" data-cat="pump"><div class="card-img-wrap" style="background:#ede4d0;"><img src="images/products/pump-valve-2.jpg" alt="Pump &amp; Valve Parts — Pump &amp; Valve Part #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Pump &amp; Valve Parts</div><div class="card-name">Pump &amp; Valve Part #2</div></div></div>
+      <div class="product-card reveal" data-cat="pump"><div class="card-img-wrap" style="background:#ede4d0;"><img src="images/products/pump-valve-3.jpg" alt="Pump &amp; Valve Parts — Pump &amp; Valve Part #3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Pump &amp; Valve Parts</div><div class="card-name">Pump &amp; Valve Part #3</div></div></div>
+      <div class="product-card reveal" data-cat="pump"><div class="card-img-wrap" style="background:#ede4d0;"><img src="images/products/pump-valve-4.jpg" alt="Pump &amp; Valve Parts — Pump &amp; Valve Part #4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Pump &amp; Valve Parts</div><div class="card-name">Pump &amp; Valve Part #4</div></div></div>
+
+      <!-- Valve & Precision Parts (12) -->
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-1.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #1</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-2.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #2</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-3.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #3</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-4.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #4</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-5.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #5</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-6.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #6" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #6</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-7.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #7" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #7</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-8.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #8" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #8</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-9.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #9" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #9</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-10.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #10" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #10</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-11.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #11" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #11</div></div></div>
+      <div class="product-card reveal" data-cat="valve"><div class="card-img-wrap" style="background:#e8e2da;"><img src="images/products/valve-12.jpg" alt="Valve &amp; Precision Parts — Valve &amp; Precision Part #12" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Valve &amp; Precision Parts</div><div class="card-name">Valve &amp; Precision Part #12</div></div></div>
+
+      <!-- Gear & Flange Parts (8) -->
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-1.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #1</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-2.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #2</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-3.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #3</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-4.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #4</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-5.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #5</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-6.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #6" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #6</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-7.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #7" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #7</div></div></div>
+      <div class="product-card reveal" data-cat="gear"><div class="card-img-wrap" style="background:#e5e0d8;"><img src="images/products/gear-8.jpg" alt="Gear &amp; Flange Parts — Gear &amp; Flange Part #8" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="img-fallback">⚙</div></div><div class="card-body"><div class="card-cat">Gear &amp; Flange Parts</div><div class="card-name">Gear &amp; Flange Part #8</div></div></div>
+
+    </div>
+  </div>
+</section>
+
+<div class="standards-strip">
+  <div class="standards-inner">
+    <div class="standards-title">STANDARDS &amp; CERTIFICATIONS</div>
+    <div class="standards-grid">
+      <span class="std-badge">IATF 16949</span>
+      <span class="std-badge">ISO/TS 16949:2009</span>
+      <span class="std-badge">TÜV SÜD Certified</span>
+      <span class="std-badge">Automobile Components</span>
+      <span class="std-badge">Valve Components</span>
+      <span class="std-badge">Gearbox Components</span>
+      <span class="std-badge">Textile Machinery</span>
+      <span class="std-badge">Zero Rejection Target</span>
+    </div>
+  </div>
+</div>
+
+<div class="cta-band">
+  <h2>NEED A CUSTOM QUOTE?</h2>
+  <p>Tell us your specifications and we will respond within 24 hours with pricing and lead times.</p>
+  <a href="contact.html" class="btn-white">Request a Quote</a>
+</div>
+
+<footer id="footer">
+  <div class="footer-logo"><svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" width="34" height="40" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="21" r="15" stroke="#d4430a" stroke-width="2.2"/><ellipse cx="28" cy="21" rx="7.5" ry="15" stroke="#d4430a" stroke-width="1.6"/><path d="M13 15.5 Q28 19.5 43 15.5" stroke="#d4430a" stroke-width="1.3"/><path d="M12.5 21 Q28 25 43.5 21" stroke="#d4430a" stroke-width="1.3"/><path d="M13.5 26.5 Q28 30.5 42.5 26.5" stroke="#d4430a" stroke-width="1.3"/><line x1="28" y1="6" x2="28" y2="36" stroke="#d4430a" stroke-width="1.6"/><path d="M21 36 C19 38.5 18.5 43 19.5 47 L21.5 51 L34.5 51 L36.5 47 C37.5 43 37 38.5 35 36 Z" stroke="#c03a08" stroke-width="1.8" fill="rgba(212,67,10,0.1)"/><path d="M19.5 43 C16.5 42 15.5 45.5 17.5 47.5" stroke="#c03a08" stroke-width="1.5"/><line x1="17" y1="55" x2="39" y2="55" stroke="#d4430a" stroke-width="2.2"/></g></svg>GENERIC CNC<span class="star"> ENGINEERS</span></div>
+  <p class="footer-tagline">Precision Machined &middot; Coimbatore, India &middot; IATF 16949 Certified</p>
+  <div class="footer-certs">
+    <span>ISO/TS 16949:2009</span><span>&middot;</span><span>TÜV SÜD Certified</span><span>&middot;</span><span>IATF No. 0125454</span>
+  </div>
+  <div class="footer-bottom">&copy; 2024 Generic CNC Engineers &nbsp;&middot;&nbsp; D.No: 160A, Peelamedu, Coimbatore &ndash; 641004 &nbsp;&middot;&nbsp; +91-8056911100</div>
+</footer>
+
+<script>
+(function(){
+  const nb=document.getElementById("navbar"),tg=document.getElementById("nav-toggle"),nl=document.getElementById("nav-links");
+  window.addEventListener("scroll",()=>nb.classList.toggle("scrolled",window.scrollY>10));
+  tg.addEventListener("click",()=>nl.classList.toggle("open"));
+  nl.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nl.classList.remove("open")));
+})();
+(function(){
+  const btns=document.querySelectorAll(".filter-btn");
+  const cards=document.querySelectorAll(".product-card");
+  const countEl=document.getElementById("filter-count");
+  const total=cards.length;
+  btns.forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      btns.forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      const f=btn.dataset.filter;
+      let shown=0;
+      cards.forEach(c=>{
+        const show=f==="all"||c.dataset.cat===f;
+        c.style.display=show?"block":"none";
+        if(show)shown++;
+      });
+      countEl.textContent=f==="all"?"Showing all "+total+" products":"Showing "+shown+" products";
+    });
+  });
+})();
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});
+  },{threshold:0.08});
+  document.querySelectorAll(".reveal").forEach((el,i)=>{
+    el.style.transitionDelay=(i%6)*0.05+"s";
+    obs.observe(el);
+  });
+})();
+</script>
+<script src="transition.js"></script>
+</body>
+</html>
