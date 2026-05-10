@@ -91,8 +91,9 @@ a{text-decoration:none;color:inherit;}
 @keyframes pinPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
 /* OFFICES */
 .offices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2rem;}
-.office-card{background:#14161a;border:1px solid #252830;padding:1.5rem;transition:border-color 0.2s;}
+.office-card{background:#14161a;border:1px solid #252830;padding:1.5rem;transition:border-color 0.2s;display:block;color:inherit;text-decoration:none;cursor:pointer;}
 .office-card:hover{border-color:var(--rust);}
+.office-card:hover .office-city::after{content:" ↗";font-size:0.9rem;color:var(--rust);}
 .office-city{font-family:"Bebas Neue",sans-serif;font-size:1.3rem;color:var(--white);margin-bottom:0.3rem;}
 .office-type{font-family:"Barlow Condensed",sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:0.8rem;}
 .office-addr{font-size:0.82rem;color:#666;line-height:1.6;}
@@ -165,8 +166,8 @@ a{text-decoration:none;color:inherit;}
         <div class="contact-item">
           <div class="contact-icon">&#128205;</div>
           <div class="contact-item-text">
-            <strong>Head Office</strong>
-            <span>Plot 14, SIDCO Industrial Estate,<br>Coimbatore &mdash; 641 021,<br>Tamil Nadu, India</span>
+            <strong>Unit 1 — Peelamedu</strong>
+            <span>No.10, Avarampalayam Road,<br>Peelamedu, Coimbatore &mdash; 641004,<br>Tamil Nadu, India</span>
           </div>
         </div>
         <div class="contact-item">
@@ -282,26 +283,21 @@ a{text-decoration:none;color:inherit;}
       </div>
     </div>
     <div class="offices-grid">
-      <div class="office-card">
-        <div class="office-city">COIMBATORE</div>
-        <div class="office-type">Head Office &amp; Manufacturing</div>
-        <div class="office-addr">Plot 14, SIDCO Industrial Estate,<br>Coimbatore &mdash; 641 021, Tamil Nadu</div>
-      </div>
-      <div class="office-card">
-        <div class="office-city">CHENNAI</div>
-        <div class="office-type">Regional Sales Office</div>
-        <div class="office-addr">No. 8, Anna Salai,<br>Chennai &mdash; 600 002, Tamil Nadu</div>
-      </div>
-      <div class="office-card">
-        <div class="office-city">MUMBAI</div>
-        <div class="office-type">Export Liaison Office</div>
-        <div class="office-addr">Unit 4B, SEEPZ SEZ,<br>Andheri East, Mumbai &mdash; 400 096</div>
-      </div>
-      <div class="office-card">
-        <div class="office-city">DELHI NCR</div>
-        <div class="office-type">North India Sales</div>
-        <div class="office-addr">Plot 22, Sector 5, IMT Manesar,<br>Gurugram &mdash; 122 050, Haryana</div>
-      </div>
+      <a href="https://www.google.com/maps/search/?api=1&query=No.10+Avarampalayam+Road+Peelamedu+Coimbatore+641004" target="_blank" rel="noopener" class="office-card">
+        <div class="office-city">COIMBATORE — UNIT 1</div>
+        <div class="office-type">Peelamedu</div>
+        <div class="office-addr">No.10, Avarampalayam Road,<br>Peelamedu,<br>Coimbatore &mdash; 641004, Tamil Nadu</div>
+      </a>
+      <a href="https://www.google.com/maps/search/?api=1&query=No.11/19+SF+160/3+Krishna+Nagar+GoldWins+Civil+Aerodrome+Coimbatore+641014" target="_blank" rel="noopener" class="office-card">
+        <div class="office-city">COIMBATORE — UNIT 2</div>
+        <div class="office-type">GoldWins, Civil Aerodrome</div>
+        <div class="office-addr">No.11/19, S.F 160/3, Krishna Nagar,<br>GoldWins, Civil Aerodrome (Post),<br>Coimbatore &mdash; 641014, Tamil Nadu</div>
+      </a>
+      <a href="https://www.google.com/maps/search/?api=1&query=No.10A+PKM+Salai+Industrial+Complex+Melayanampakkam+Chennai+600095" target="_blank" rel="noopener" class="office-card">
+        <div class="office-city">CHENNAI — UNIT 3</div>
+        <div class="office-type">Melayanampakkam</div>
+        <div class="office-addr">No.10A, P.K.M. Salai,<br>Industrial Complex, Melayanampakkam,<br>Chennai &mdash; 600095, Tamil Nadu</div>
+      </a>
     </div>
   </div>
 </div>
@@ -312,7 +308,7 @@ a{text-decoration:none;color:inherit;}
   <div class="footer-certs">
     <span>ISO 9001:2015</span><span>&middot;</span><span>TS 16949</span><span>&middot;</span><span>BIS Certified</span><span>&middot;</span><span>Export Quality</span>
   </div>
-  <div class="footer-bottom">&copy; 2024 GENERIC CNC ENGINEERS. All rights reserved. &nbsp;&middot;&nbsp; Coimbatore, Tamil Nadu, India</div>
+  <div class="footer-bottom">&copy; 2026 GENERIC CNC ENGINEERS. All rights reserved. &nbsp;&middot;&nbsp; Coimbatore, Tamil Nadu, India<br><span style="font-size:0.7rem;color:#ffffff;font-weight:600;letter-spacing:0.05em;">Developed by <a href="https://www.developermuthu.com" target="_blank" rel="noopener" style="color:#ffffff;font-weight:600;text-decoration:none;cursor:pointer;">Eedhal Technologies</a></span></div>
 </footer>
 
 <script>
